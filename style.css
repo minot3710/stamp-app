@@ -1,0 +1,49 @@
+#stampCard {
+  position: relative;
+  width: 320px;       /* カード画像の幅に合わせる */
+  height: 180px;      /* カード画像の高さに合わせる */
+  background-image: url('images/Surface_brown.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.stamp {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 50px;
+    height: 50px;
+    opacity: 0.2;
+    transition: 0.3s ease;
+}
+
+#footer {
+  background-color: #e79aaa;
+  color: #fff;
+  padding: 60px  40px 20px;
+   position: relative;
+  overflow: hidden;
+  margin-top: 15%;
+}
+
+.footerLogo img {
+  width: 120px;
+  height: 50px;
+  margin-bottom: 20px;
+  object-fit: contain;
+}
+
+.footerNav ul li{
+    padding:.5rem 10px;
+    list-style: none;
+}
+
+.footerNav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.footerNav a:hover {
+  text-decoration: underline;
+}
