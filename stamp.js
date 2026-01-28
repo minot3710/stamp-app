@@ -75,7 +75,7 @@ function issueCoupon() {
   alert(`クーポンを発行しました！ コード: ${couponCode}`);
 }
 
-// 押されたスタンプIDをlocalStorageで管理（例: ['stamp1', 'stamp3']）
+// 押されたスタンプIDをlocalStorageで管理（例: ['stamp1', 'stamp3'])
 function loadStamped() {
   const stamped = localStorage.getItem('stamped') || '[]';
   return JSON.parse(stamped);
