@@ -29,6 +29,35 @@ function getStampId() {
   return params.get('stampId');
 }
 
+// 押印済みスタンプIDと日付の配列を取得
+function loadStamped() {
+  const stamped = localStorage.getItem('stamped') || '[]';
+  return JSON.parse(stamped);
+}
+
+// 押印済みスタンプIDと日付の配列を保存
+function saveStamped(stamped) {
+  localStorage.setItem('stamped', JSON.stringify(stamped));
+}
+
+// スタンプを押す（同じstampIdを同じ日に押せないように）
+function stamp(stampId) {
+  const today = getToday();
+  const stamped = loadStamped();
+
+  // 同じstampIdで今日押印済みなら拒否
+  if (stamped.some(s => s.id === stampId && s.date === today)) {
+    alert('このスタンプは本日すでに押されています。');
+    return false;
+  }
+
+  // 押印済み配列に追加
+  stamped.push({ id: stampId, date: today });
+  saveStamped(stamped);
+  updateStampUI();
+  return true;
+}
+
 // スタンプ加算処理
 function addStamp() {
   const today = getToday();
@@ -75,31 +104,11 @@ function issueCoupon() {
   alert(`クーポンを発行しました！ コード: ${couponCode}`);
 }
 
-// 押されたスタンプIDをlocalStorageで管理（例: ['stamp1', 'stamp3'])
-function loadStamped() {
-  const stamped = localStorage.getItem('stamped') || '[]';
-  return JSON.parse(stamped);
-}
-
-function saveStamped(stamped) {
-  localStorage.setItem('stamped', JSON.stringify(stamped));
-}
-
-// スタンプを押す（表示を切り替え、状態を保存）
-function stamp(stampId) {
-  const stamped = loadStamped();
-  if (!stamped.includes(stampId)) {
-    stamped.push(stampId);
-    saveStamped(stamped);
-  }
-  updateStampUI();
-}
-
 // UI更新：押されたスタンプをはっきり表示
 function updateStampUI() {
   const stamped = loadStamped();
   document.querySelectorAll('.stamp').forEach(img => {
-    if (stamped.includes(img.id)) {
+    if (stamped.some(s => s.id === img.id)) {
       img.classList.add('active');
     } else {
       img.classList.remove('active');
@@ -147,9 +156,21 @@ window.onload = () => {
   // URLにstampIdがあればスタンプ押印
   const stampId = getStampId();
   if (stampId) {
-    stamp(stampId);
-    addStamp();
+    if (stamp(stampId)) {
+      addStamp();
+    }
   }
+
+document.getElementById('resetBtn').onclick = () => {
+  if (confirm('本当にリセットしますか？ 全てのスタンプとクーポン情報が消えます。')) {
+    localStorage.removeItem('stampCount');
+    localStorage.removeItem('lastStampDate');
+    localStorage.removeItem('stamped');
+    localStorage.removeItem('coupons');
+    updateUI();
+    alert('リセットしました。');
+  }
+};
 
   updateUI();
 };
