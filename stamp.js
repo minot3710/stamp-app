@@ -29,41 +29,40 @@ function getStampId() {
   return params.get('stampId');
 }
 
-// 押印済みスタンプIDと日付の配列を取得
+// 押印済みスタンプID配列を取得
 function loadStamped() {
   const stamped = localStorage.getItem('stamped') || '[]';
   return JSON.parse(stamped);
 }
 
-// 押印済みスタンプIDと日付の配列を保存
+// 押印済みスタンプID配列を保存
 function saveStamped(stamped) {
   localStorage.setItem('stamped', JSON.stringify(stamped));
 }
 
-// スタンプを押す（同じstampIdを同じ日に押せないように）
+// スタンプを押す（押印済み管理）
 function stamp(stampId) {
+  const stamped = loadStamped();
+  if (!stamped.includes(stampId)) {
+    stamped.push(stampId);
+    saveStamped(stamped);
+  }
+  updateStampUI();
+}
+
+// スタンプ数を増やす（重複押印防止付き）
+function addStamp(stampId) {
   const today = getToday();
   const stamped = loadStamped();
 
-  // 同じstampIdで今日押印済みなら拒否
-  if (stamped.some(s => s.id === stampId && s.date === today)) {
-    alert('このスタンプは本日すでに押されています。');
-    return false;
+  // すでに押されているstampIdなら処理しない
+  if (stamped.includes(stampId)) {
+    alert('このスタンプはすでに押されています。');
+    return;
   }
 
-  // 押印済み配列に追加
-  stamped.push({ id: stampId, date: today });
-  saveStamped(stamped);
-  updateStampUI();
-  return true;
-}
-
-// スタンプ加算処理
-function addStamp() {
-  const today = getToday();
-  const lastStampDate = localStorage.getItem('lastStampDate');
-
   // 同じ日にスタンプを押せないように制限
+  const lastStampDate = localStorage.getItem('lastStampDate');
   if (lastStampDate === today) {
     alert('本日はすでにスタンプを押しています。');
     return;
@@ -81,6 +80,10 @@ function addStamp() {
     issueCoupon();
     localStorage.setItem('stampCount', '0'); // スタンプリセット
   }
+
+  // 押印済みstampIdに追加
+  stamped.push(stampId);
+  saveStamped(stamped);
 
   updateUI();
 }
@@ -108,7 +111,7 @@ function issueCoupon() {
 function updateStampUI() {
   const stamped = loadStamped();
   document.querySelectorAll('.stamp').forEach(img => {
-    if (stamped.some(s => s.id === img.id)) {
+    if (stamped.includes(img.id)) {
       img.classList.add('active');
     } else {
       img.classList.remove('active');
@@ -156,21 +159,8 @@ window.onload = () => {
   // URLにstampIdがあればスタンプ押印
   const stampId = getStampId();
   if (stampId) {
-    if (stamp(stampId)) {
-      addStamp();
-    }
+    addStamp(stampId);
   }
-
-document.getElementById('resetBtn').onclick = () => {
-  if (confirm('本当にリセットしますか？ 全てのスタンプとクーポン情報が消えます。')) {
-    localStorage.removeItem('stampCount');
-    localStorage.removeItem('lastStampDate');
-    localStorage.removeItem('stamped');
-    localStorage.removeItem('coupons');
-    updateUI();
-    alert('リセットしました。');
-  }
-};
 
   updateUI();
 };
