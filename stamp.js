@@ -163,4 +163,17 @@ window.onload = () => {
   }
 
   updateUI();
+
+
+  // test
+  document.getElementById('resetBtn').onclick = () => {
+  if (confirm('本当にリセットしますか？ 全てのスタンプとクーポン情報が消えます。')) {
+    localStorage.removeItem('stampCount');
+    localStorage.removeItem('lastStampDate');
+    localStorage.removeItem('stamped');
+    localStorage.removeItem('coupons');
+    updateUI();
+    alert('リセットしました。');
+  }
+};
 };
