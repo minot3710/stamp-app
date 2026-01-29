@@ -80,11 +80,11 @@
     transition: 0.3s ease;
 }
 
-.couponImage {
+#couponImage {
   display: none;
   width: 200px;
-  height: auto;
-  object-fit: cover;
+  height:70px;
+  object-fit: contain;
 }
 #useCouponBtn {
   display: none;
