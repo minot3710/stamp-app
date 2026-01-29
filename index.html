@@ -17,6 +17,32 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+      <header id="header">
+        <img src="images/COCOTTE_logo.png" alt="logo">
+        <div class="menuBtn">
+                <ul>
+                    <li><a href="./menu.html">メニューページ</a></li>
+                    <li><a href="./originalcontent/originalContent.html">会員証</a></li>
+                    <li><a href="./index.html">トップページ</a></li>
+                </ul>
+        </div>
+        <div class="openBtn"><span></span><span></span><span></span></div>
+    </header>
+    <main id="topPage">
+
+        <nav id="gNav">
+            <div id="gNavList">
+                <ul>
+                    <li><a href="#about">COCOTTEについて</a></li>
+                    <li><a href="#information">営業案内</a></li>
+                    <li><a href="#calender">カレンダー</a></li>
+                    <li><a href="#introduction">コース紹介</a></li>
+                    <li><a href="menu">メニュー</a></li>
+                    <li><a href="#originalContent">オリジナルコンテンツ</a></li>
+                    <li><a href="#access">店舗情報</a></li>
+                </ul>
+            </div>
+        </nav>
 <main>
     <div id="stampCountDisplay">スタンプ数: 0</div>
     <button id="resetBtn" style="margin-left: 10px;">リセット</button>
@@ -66,7 +92,9 @@
       </ul>
     </nav>
 </footer>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="stamp.js"></script>
+<script src="menu.js"></script>
 </body>
 </html>
 
