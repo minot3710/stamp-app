@@ -152,16 +152,6 @@ function updateUI() {
   updateStampUI();
 }
 
-// ページ内UIで押印スタンプを選ぶ仕組み
-function setupStampButtons() {
-  document.querySelectorAll('.stampBtn').forEach(btn => {
-    btn.onclick = () => {
-      const stampId = btn.dataset.stampId;
-      addStamp(stampId);
-    };
-  });
-}
-
 // テスト用リセットボタン
 function setupResetButton() {
   const resetBtn = document.getElementById('resetBtn');
@@ -188,6 +178,5 @@ window.onload = () => {
   }
 
   updateUI();
-  setupStampButtons();
   setupResetButton();
 };
