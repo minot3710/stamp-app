@@ -152,6 +152,31 @@ function updateUI() {
   updateStampUI();
 }
 
+// ページ内UIで押印スタンプを選ぶ仕組み
+function setupStampButtons() {
+  document.querySelectorAll('.stampBtn').forEach(btn => {
+    btn.onclick = () => {
+      const stampId = btn.dataset.stampId;
+      addStamp(stampId);
+    };
+  });
+}
+
+// テスト用リセットボタン
+function setupResetButton() {
+  const resetBtn = document.getElementById('resetBtn');
+  resetBtn.onclick = () => {
+    if (confirm('本当にリセットしますか？ 全てのスタンプとクーポン情報が消えます。')) {
+      localStorage.removeItem('stampCount');
+      localStorage.removeItem('lastStampDate');
+      localStorage.removeItem('stamped');
+      localStorage.removeItem('coupons');
+      updateUI();
+      alert('リセットしました。');
+    }
+  };
+}
+
 // ページ読み込み時の初期化
 window.onload = () => {
   initUser();
@@ -163,17 +188,6 @@ window.onload = () => {
   }
 
   updateUI();
-
-
-  // test
-  document.getElementById('resetBtn').onclick = () => {
-  if (confirm('本当にリセットしますか？ 全てのスタンプとクーポン情報が消えます。')) {
-    localStorage.removeItem('stampCount');
-    localStorage.removeItem('lastStampDate');
-    localStorage.removeItem('stamped');
-    localStorage.removeItem('coupons');
-    updateUI();
-    alert('リセットしました。');
-  }
-};
+  setupStampButtons();
+  setupResetButton();
 };
