@@ -92,20 +92,19 @@ function updateUI() {
 
   // クーポン一覧表示
   const coupons = JSON.parse(localStorage.getItem('coupons') || '[]');
+  const couponList = document.getElementById('couponList');
+  couponList.innerHTML = '';
   const today = getToday();
-  const couponImage = document.getElementById('couponImage');
-  const hasValidCoupon = coupons.some(coupon => !coupon.used && coupon.expiry >= today);
 
-  if (hasValidCoupon) {
-    couponImage.style.display = 'block';
-  } else {
-    couponImage.style.display = 'none';
-  }
-
+  // クーポンコードごとに1つずつリストと画像を表示
+  const displayedCodes = new Set();
 
   coupons.forEach(coupon => {
     if (coupon.used) return; // 使用済みは非表示
     if (coupon.expiry < today) return; // 期限切れは非表示
+
+    if (displayedCodes.has(coupon.code)) return; // 重複表示防止
+    displayedCodes.add(coupon.code);
 
     const li = document.createElement('li');
     li.textContent = `コード: ${coupon.code} (有効期限: ${coupon.expiry})`;
@@ -120,6 +119,20 @@ function updateUI() {
 
     li.appendChild(useBtn);
     couponList.appendChild(li);
+
+    // クーポン画像をコードごとに表示（画像は1つだけ表示）
+    const couponImageContainer = document.getElementById('couponImageContainer');
+    const img = document.createElement('img');
+    img.src = 'coupon.png';
+    img.alt = `クーポン画像: ${coupon.code}`;
+    img.style.maxWidth = '300px';
+    img.style.height = 'auto';
+    img.style.border = '2px solid #4CAF50';
+    img.style.borderRadius = '8px';
+    img.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
+    img.style.marginTop = '10px';
+
+    couponImageContainer.appendChild(img);
   });
 
   updateStampUI();
