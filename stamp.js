@@ -13,7 +13,6 @@ function initUser() {
     localStorage.setItem('stampCount', '0');
     localStorage.setItem('lastStampDate', '');
     localStorage.setItem('coupons', JSON.stringify([]));
-    localStorage.setItem('stamped', JSON.stringify([])); // 押印済みスタンプID管理
   }
 }
 
@@ -29,61 +28,28 @@ function getStampId() {
   return params.get('stampId');
 }
 
-// 押印済みスタンプID配列を取得
-function loadStamped() {
-  const stamped = localStorage.getItem('stamped') || '[]';
-  return JSON.parse(stamped);
-}
-
-// 押印済みスタンプID配列を保存
-function saveStamped(stamped) {
-  localStorage.setItem('stamped', JSON.stringify(stamped));
-}
-
-// スタンプを押す（押印済み管理）
-function stamp(stampId) {
-  const stamped = loadStamped();
-  if (!stamped.includes(stampId)) {
-    stamped.push(stampId);
-    saveStamped(stamped);
-  }
-  updateStampUI();
-}
-
-// スタンプ数を増やす（重複押印防止付き）
+// スタンプを押す（重複押印防止付き、ただしテスト用に同日複数回押印可能）
 function addStamp(stampId) {
-  const today = getToday();
-  const stamped = loadStamped();
+  // テスト用に同日複数回押せるように制限を外す
+  // const today = getToday();
+  // const lastStampDate = localStorage.getItem('lastStampDate');
 
-  // すでに押されているstampIdなら処理しない
-  if (stamped.includes(stampId)) {
-    alert('このスタンプはすでに押されています。');
-    return;
-  }
-
-  // 同じ日にスタンプを押せないように制限
-  const lastStampDate = localStorage.getItem('lastStampDate');
-  if (lastStampDate === today) {
-    alert('本日はすでにスタンプを押しています。');
-    return;
-  }
+  // if (lastStampDate === today) {
+  //   alert('本日はすでにスタンプを押しています。');
+  //   return;
+  // }
 
   let count = parseInt(localStorage.getItem('stampCount') || '0', 10);
   count += 1;
   localStorage.setItem('stampCount', count.toString());
-  localStorage.setItem('lastStampDate', today);
+  // localStorage.setItem('lastStampDate', today);
 
   alert(`スタンプを押しました！ 現在のスタンプ数: ${count}`);
 
-  // スタンプ5個でクーポン発行
   if (count >= 5) {
     issueCoupon();
-    localStorage.setItem('stampCount', '0'); // スタンプリセット
+    localStorage.setItem('stampCount', '0');
   }
-
-  // 押印済みstampIdに追加
-  stamped.push(stampId);
-  saveStamped(stamped);
 
   updateUI();
 }
@@ -107,11 +73,11 @@ function issueCoupon() {
   alert(`クーポンを発行しました！ コード: ${couponCode}`);
 }
 
-// UI更新：押されたスタンプをはっきり表示
+// UI更新：スタンプ画像の表示切替
 function updateStampUI() {
-  const stamped = loadStamped();
-  document.querySelectorAll('.stamp').forEach(img => {
-    if (stamped.includes(img.id)) {
+  const count = parseInt(localStorage.getItem('stampCount') || '0', 10);
+  document.querySelectorAll('.stamp').forEach((img, index) => {
+    if (index < count) {
       img.classList.add('active');
     } else {
       img.classList.remove('active');
@@ -159,7 +125,6 @@ function setupResetButton() {
     if (confirm('本当にリセットしますか？ 全てのスタンプとクーポン情報が消えます。')) {
       localStorage.removeItem('stampCount');
       localStorage.removeItem('lastStampDate');
-      localStorage.removeItem('stamped');
       localStorage.removeItem('coupons');
       updateUI();
       alert('リセットしました。');
