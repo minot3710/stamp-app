@@ -92,9 +92,16 @@ function updateUI() {
 
   // クーポン一覧表示
   const coupons = JSON.parse(localStorage.getItem('coupons') || '[]');
-  const couponList = document.getElementById('couponList');
-  couponList.innerHTML = '';
   const today = getToday();
+  const couponImage = document.getElementById('couponImage');
+  const hasValidCoupon = coupons.some(coupon => !coupon.used && coupon.expiry >= today);
+
+  if (hasValidCoupon) {
+    couponImage.style.display = 'block';
+  } else {
+    couponImage.style.display = 'none';
+  }
+
 
   coupons.forEach(coupon => {
     if (coupon.used) return; // 使用済みは非表示
