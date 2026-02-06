@@ -85,10 +85,14 @@ function updateStampUI() {
   });
 }
 
-// UI更新（スタンプ数・クーポン一覧）
+// UI更新（スタンプ数・クーポン一覧・UUID表示）
 function updateUI() {
   const count = localStorage.getItem('stampCount') || '0';
   document.getElementById('stampCountDisplay').textContent = `スタンプ数: ${count}`;
+
+  // UUID表示
+  const userId = localStorage.getItem('userId') || '';
+  document.getElementById('userIdDisplay').textContent = `ユーザーID: ${userId}`;
 
   // クーポン画像表示エリアをクリア
   const couponImageContainer = document.getElementById('couponImageContainer');
@@ -124,18 +128,15 @@ function updateUI() {
     li.appendChild(useBtn);
     couponList.appendChild(li);
 
-    // クーポン画像をコードごとに表示（画像は1つだけ表示）
+    // クーポン画像とコードをセットで表示
+    const container = document.createElement('div');
+    container.className = 'coupon-container';
+
     const img = document.createElement('img');
     img.src = 'images/coupon.png';
     img.alt = `クーポン画像: ${coupon.code}`;
-    img.style.maxWidth = '300px';
-    img.style.height = 'auto';
-    img.style.border = '2px solid #4CAF50';
-    img.style.borderRadius = '8px';
-    img.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
-    img.style.marginTop = '10px';
 
-    // ここで画像をタップ（クリック）したら使用済みにする処理を追加
+    // 画像クリックで使用済みにする
     img.style.cursor = 'pointer';
     img.title = 'タップで使用済みにします';
     img.onclick = () => {
@@ -145,7 +146,13 @@ function updateUI() {
       alert(`クーポンコード ${coupon.code} を使用済みにしました。`);
     };
 
-    couponImageContainer.appendChild(img);
+    const codeLabel = document.createElement('div');
+    codeLabel.className = 'coupon-code';
+    codeLabel.textContent = coupon.code;
+
+    container.appendChild(img);
+    container.appendChild(codeLabel);
+    couponImageContainer.appendChild(container);
   });
 
   updateStampUI();
