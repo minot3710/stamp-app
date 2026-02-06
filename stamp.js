@@ -118,23 +118,23 @@ function updateUI() {
     li.appendChild(useBtn);
     couponList.appendChild(li);
 
-    // クーポン画像とコードをセットで表示
-    const container = document.createElement('div');
-    container.className = 'coupon-container';
+    // // クーポン画像とコードをセットで表示
+    // const container = document.createElement('div');
+    // container.className = 'coupon-container';
 
-    const img = document.createElement('img');
-    img.src = 'images/coupon.png';
-    img.alt = `クーポン画像: ${coupon.code}`;
+    // const img = document.createElement('img');
+    // img.src = 'images/coupon.png';
+    // img.alt = `クーポン画像: ${coupon.code}`;
 
-    // 画像クリックで使用済みにする
-    img.style.cursor = 'pointer';
-    img.title = 'タップで使用済みにします';
-    img.onclick = () => {
-      coupon.used = true;
-      localStorage.setItem('coupons', JSON.stringify(coupons));
-      updateUI();
-      alert(`クーポンコード ${coupon.code} を使用済みにしました。`);
-    };
+    // // 画像クリックで使用済みにする
+    // img.style.cursor = 'pointer';
+    // img.title = 'タップで使用済みにします';
+    // img.onclick = () => {
+    //   coupon.used = true;
+    //   localStorage.setItem('coupons', JSON.stringify(coupons));
+    //   updateUI();
+    //   alert(`クーポンコード ${coupon.code} を使用済みにしました。`);
+    // };
 
     const codeLabel = document.createElement('div');
     codeLabel.className = 'coupon-code';
