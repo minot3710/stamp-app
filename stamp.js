@@ -126,7 +126,7 @@ function updateUI() {
 
     // クーポン画像をコードごとに表示（画像は1つだけ表示）
     const img = document.createElement('img');
-    img.src = 'images/coupon.png';
+    img.src = 'coupon.png';
     img.alt = `クーポン画像: ${coupon.code}`;
     img.style.maxWidth = '300px';
     img.style.height = 'auto';
@@ -134,6 +134,16 @@ function updateUI() {
     img.style.borderRadius = '8px';
     img.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
     img.style.marginTop = '10px';
+
+    // ここで画像をタップ（クリック）したら使用済みにする処理を追加
+    img.style.cursor = 'pointer';
+    img.title = 'タップで使用済みにします';
+    img.onclick = () => {
+      coupon.used = true;
+      localStorage.setItem('coupons', JSON.stringify(coupons));
+      updateUI();
+      alert(`クーポンコード ${coupon.code} を使用済みにしました。`);
+    };
 
     couponImageContainer.appendChild(img);
   });

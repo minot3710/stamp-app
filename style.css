@@ -248,6 +248,39 @@ ul {
   display: none;
 }
 
+.coupon-container {
+  position: relative;
+  display: inline-block;
+  margin: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.coupon-container img {
+  max-width: 300px;
+  height: auto;
+  border: 2px solid #4CAF50;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  display: block;
+}
+
+.coupon-code {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 14px;
+  color: #333;
+  pointer-events: none;
+  user-select: none;
+}
+
 #footer {
   background-color: #e79aaa;
   color: #fff;
