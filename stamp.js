@@ -80,13 +80,7 @@ function updateUI() {
   const count = localStorage.getItem('stampCount') || '0';
   document.getElementById('stampCountDisplay').textContent = `スタンプ数: ${count}`;
 
-  // UUID表示
-  const userId = localStorage.getItem('userId') || '';
-  document.getElementById('userIdDisplay').textContent = `ユーザーID: ${userId}`;
 
-  // クーポン画像表示エリアをクリア
-  const couponImageContainer = document.getElementById('couponImageContainer');
-  couponImageContainer.innerHTML = '';
 
   // クーポン一覧表示
   const coupons = JSON.parse(localStorage.getItem('coupons') || '[]');
