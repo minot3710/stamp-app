@@ -90,6 +90,10 @@ function updateUI() {
   const count = localStorage.getItem('stampCount') || '0';
   document.getElementById('stampCountDisplay').textContent = `スタンプ数: ${count}`;
 
+  // クーポン画像表示エリアをクリア
+  const couponImageContainer = document.getElementById('couponImageContainer');
+  couponImageContainer.innerHTML = '';
+
   // クーポン一覧表示
   const coupons = JSON.parse(localStorage.getItem('coupons') || '[]');
   const couponList = document.getElementById('couponList');
@@ -121,9 +125,8 @@ function updateUI() {
     couponList.appendChild(li);
 
     // クーポン画像をコードごとに表示（画像は1つだけ表示）
-    const couponImageContainer = document.getElementById('couponImageContainer');
     const img = document.createElement('img');
-    img.src = 'coupon.png';
+    img.src = 'images/coupon.png';
     img.alt = `クーポン画像: ${coupon.code}`;
     img.style.maxWidth = '300px';
     img.style.height = 'auto';
