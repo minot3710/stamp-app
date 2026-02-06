@@ -117,7 +117,7 @@ function updateUI() {
     container.className = 'coupon-container';
 
     const img = document.createElement('img');
-    img.src = 'images/coupon.png';
+    img.src = './images/coupon.png';
     img.alt = `クーポン画像: ${coupon.code}`;
 
     // 画像クリックで使用済みにする
