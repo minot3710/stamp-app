@@ -30,19 +30,9 @@ function getStampId() {
 
 // スタンプを押す（重複押印防止付き、ただしテスト用に同日複数回押印可能）
 function addStamp(stampId) {
-  // テスト用に同日複数回押せるように制限を外す
-  // const today = getToday();
-  // const lastStampDate = localStorage.getItem('lastStampDate');
-
-  // if (lastStampDate === today) {
-  //   alert('本日はすでにスタンプを押しています。');
-  //   return;
-  // }
-
   let count = parseInt(localStorage.getItem('stampCount') || '0', 10);
   count += 1;
   localStorage.setItem('stampCount', count.toString());
-  // localStorage.setItem('lastStampDate', today);
 
   alert(`スタンプを押しました！ 現在のスタンプ数: ${count}`);
 
