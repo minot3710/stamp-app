@@ -199,7 +199,9 @@ ul {
     color: #fff;
 }
 
-
+#resetBtn {
+    margin-top: 10%;
+}
 
 #stampCard {
   position: relative;
@@ -208,7 +210,7 @@ ul {
   background-image: url('images/Surface_brown.jpg');
   background-size: cover;
   background-position: center;
-  margin: 0 auto;
+  margin: 5% auto 10%;
   display: block;
   object-fit: contain;
 }
@@ -393,6 +395,17 @@ ul {
 }
 
 @media screen and (min-width: 1024px) {
+
+body {
+  background-color: #74B677;
+}
+
+main {
+   max-width: 480px;
+   width: 100%;
+    margin: 0 auto;
+    background-color: #F8F2EF;
+}
 
 /*header*/
 #header {
