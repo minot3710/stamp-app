@@ -497,7 +497,7 @@ ul {
     width: 250px;
     height: 250px;
     margin: 0 auto;
-    background-image: url('../img/menuCOCOTTE.png');
+    background-image: url('images/menuCOCOTTE.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -554,12 +554,6 @@ ul {
     color: #FFFFFF;
     margin-bottom: 0;
     text-align: center;
-}
-#footer::before {
-    background-image: url("../img/cloud_pc.png");
-    height: 80px; 
-    top: -79px;
-    align-items: center;  
 }
 .footerLogo {
     width: 200px;
