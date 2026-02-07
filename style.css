@@ -1,44 +1,73 @@
  /* * {
   outline: 2px solid blue;
 }   */
+:root {
+    --clr-white: #FFFFFF;
+    --clr-main-pink: #F7A9B9;
+    --clr-accent-pink: #D89CAA;
+    --clr-text-brown: #5D4037;
+    --clr-bg-beige: #EDE0D4;
+    --clr-accent-green: #74B677;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #F8F2EF;
+    color: #252525;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+    font-family: fot-tsukuardgothic-std, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+a {
+    text-decoration: none;
+    color: #252525;
+}
 
 ul {
-  list-style-type: none;
+    list-style: none;
 }
 
 #header {
     position: fixed; 
+    display: flex;
+    align-items: center;
     background-color: #F7A9B9;
-    width: 100%;
-    height: auto;
+    width: 100vw;
+    height: 60px;
     margin: 0;
     top: 0;
     z-index: 9998;
 }
 #header img {
     object-fit: contain;
-    width: 80px;
-    height: 30px;    
+    width: 100px;
+    height: 30px;
+    margin-left: 40px;    
 }
 
 
 .openBtn {
-    position: fixed;
-    top: -1%;
+    position: absolute;
     right: 10px;
     z-index: 9999;
     cursor: pointer;
     width: 60px;
-    height: 50px;
 }
 .openBtn span {
-    display: inline-block;
+    display: block;
     transition: all .4s;
-    position: absolute;
-    left: 14px;
+    margin: 5px auto;
     height: 3px;
     border-radius: 2px;
-    background-color: #6A4943;
+    background-color: #ffff;
     width: 45%;
 }
 .openBtn span:nth-of-type(1) {
@@ -52,8 +81,8 @@ ul {
 .openBtn.active span:nth-of-type(1) {
     top: 18px;
     left: 18px;
-    transform: translateY(6px) rotate(-45deg);
-    width: 30%;
+    transform: translateY(8px) rotate(-45deg);
+    width: 50%;
 }
 .openBtn.active span:nth-of-type(2) {
     opacity: 0;
@@ -61,8 +90,8 @@ ul {
 .openBtn.active span:nth-of-type(3) {
     top: 30px;
     left: 18px;
-    transform: translateY(-6px) rotate(45deg);
-    width: 30%;
+    transform: translateY(-8px) rotate(45deg);
+    width: 50%;
 }
 
 #gNav {
@@ -80,29 +109,51 @@ ul {
     opacity: 1;
     z-index: 999;
 }
+
 #gNav.panelactive #gNavList {
-    position: fixed;
-    z-index: 999;
-    width: 100%;
-    height: 100vh;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
 }
+
+#gNavList::before {
+    margin: 40px auto 20px; 
+}
+
+#gNavList::before {
+    content: "";
+    display: block;
+    width: 200px;
+    height: 200px;
+    margin: 80px auto 20px;
+    background-image: url('../img/menuCOCOTTE.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 10; 
+}
+
 #gNav ul {
     display: none;
-    position: absolute;
-    z-index: 999;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    position: static;      
+    transform: none;
     width: 100%;
     padding: 0;
+    margin-top: 40px;      
     text-align: center;
 }
+
+#gNav li {
+    margin: 12px 0;
+    align-items: center;
+}
+
+
 #gNav.panelactive ul {
     display: block;
 }
-#gNav a {
+
+#gNav a {   
     display: block;
     font-size: 20px;
     color: #252525;
@@ -113,18 +164,17 @@ ul {
     height: 30px;
     margin: 0 auto;
 }
-#gNav li {
-    margin: 15%;
+#gNavList {
+    position: relative;
+    z-index: 5;
 }
-
-
 
 .menuBtn {
     position: fixed;
     background-color: #F7A9B9;
     bottom:0vh;
     height: auto;
-    width: 100%;
+    width: 100vw;
     z-index: 9999;
     margin: 0 auto;
     padding: 0;
@@ -148,6 +198,7 @@ ul {
     justify-content: center;
     color: #fff;
 }
+
 
 
 #stampCard {
@@ -284,30 +335,256 @@ ul {
 #footer {
   background-color: #e79aaa;
   color: #fff;
-  padding: 60px  40px 20px;
-   position: relative;
+  position: relative;
   overflow: hidden;
   margin-top: 15%;
+  margin-bottom: 5%;
+  justify-content: center;
 }
 
-.footerLogo img {
-  width: 120px;
-  height: 50px;
-  margin-bottom: 20px;
-  object-fit: contain;
+.footerNav {
+    display: flex;
+    justify-content: center;
 }
-
+.footerNav ul {
+    text-align: left;
+    display: inline-block;
+    padding: 0;
+}
 .footerNav ul li{
     padding:.5rem 10px;
     list-style: none;
 }
-
 .footerNav a {
   color: #fff;
   text-decoration: none;
   font-size: 14px;
 }
-
 .footerNav a:hover {
   text-decoration: underline;
+}
+.footerInner {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5%;
+    margin-left: 5%;
+    row-gap: 15px;
+}
+.footerLogo {
+    width: 150px;
+    height: fit-content;
+    object-fit: contain;
+}
+.footerLogoSC {
+    width: 300px;
+    height: fit-content;
+    object-fit: contain;
+}
+
+.copyright {
+    text-align: center;
+    margin-top: 10%;
+    font-size: small;
+}
+
+.footerNav ul li a::before {
+    content: "▶";
+    display: inline-block;
+}
+
+@media screen and (min-width: 1024px) {
+
+/*header*/
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    z-index: 1000; 
+    width: 100%;
+    height: 80px;
+    padding: 0 max(40px, calc((100% - 1100px) / 2));
+    box-sizing: border-box;
+}
+
+#header img {
+    width: 200px;
+    height: 40px;
+    margin: 0;
+}
+
+.menuBtn {
+    display: flex;
+    align-items: center;
+    position: static;
+    width: auto;
+    margin-left: auto; 
+    margin-right: 0;
+    background-color: transparent;
+}
+
+.menuBtn ul {
+    display: flex;
+    margin: 0;
+    margin-right: 30px;
+    padding: 0;
+    background: transparent;
+}
+
+.menuBtn li {
+    display: list-item;
+    margin: 0;
+    padding: 0 20px;
+    background-color: transparent;
+}
+
+.menuBtn li:nth-of-type(3) {
+    display: none;
+}
+
+.menuBtn a {
+    color: var(--clr-white);
+    font-size: 1.125rem;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+
+
+.openBtn span:nth-of-type(1) { top: 15px; }
+.openBtn span:nth-of-type(2) { top: 23px; }
+.openBtn span:nth-of-type(3) { top: 31px; }
+
+/*gNav*/
+#gNav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    right: -100%;
+    overflow-y: auto;
+    width: 100%;
+    height: 100vh;
+    padding-top: 5vh;
+    background-color: var(--clr-main-pink);
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: contain;
+    transition: all 0.6s;
+}
+
+#gNav.panelactive {
+    right: 0;
+    opacity: 1;
+}
+
+#gNavList {
+    display: block;
+    position: static;
+    text-align: center;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 40px 0 0;
+}
+
+#gNavList::before {
+    content: "";
+    display: block;
+    width: 250px;
+    height: 250px;
+    margin: 0 auto;
+    background-image: url('../img/menuCOCOTTE.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#gNavList ul {
+    display: block;
+    position: static;
+    transform: none;
+    list-style: none;
+    width: 100%;
+    top: auto;
+    left: auto;
+    margin: 0;
+    padding: 0;
+}
+
+#gNavList ul::before {
+    content: none;
+    display: none;
+}
+
+#gNav li {
+    display: block;
+    list-style: none;
+    margin: 15px auto;
+    padding: 0;
+}
+
+ #gNav ul {
+        justify-content: center;
+    }
+
+#gNavList li a {
+    display: inline-block;
+    text-decoration: none;
+    width: 280px;
+    height: auto;
+    margin: 0;
+    padding: 10px 60px;
+    box-sizing: border-box;
+    color: var(--clr-text-brown);
+    background: var(--clr-bg-beige);
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* footer */
+#footer{
+    margin-top: 10%;
+    padding-top: 5%;
+    color: #FFFFFF;
+    margin-bottom: 0;
+    text-align: center;
+}
+#footer::before {
+    background-image: url("../img/cloud_pc.png");
+    height: 80px; 
+    top: -79px;
+    align-items: center;  
+}
+.footerLogo {
+    width: 200px;
+    height: fit-content;
+    object-fit: contain;
+}
+.footerLogoSC {
+    width: 400px;
+    height: fit-content;
+    object-fit: contain;
+}
+.footer-flex {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 100px;
+    width: fit-content;
+    margin: 0 auto;
+}
+.footerLogo{
+    margin-bottom: 2%;
+}
+.footerLogo .school-logo {
+    width: 300px;
+    margin-bottom: 2%;
+}
+
 }
