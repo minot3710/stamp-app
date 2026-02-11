@@ -28,8 +28,25 @@ function getStampId() {
   return params.get('stampId');
 }
 
-// スタンプを押す（重複押印防止付き、ただしテスト用に同日複数回押印可能）
+// スタンプを押す（同じstampIdは1日に1回のみ押印可能）
 function addStamp(stampId) {
+  if (!stampId) {
+    alert('スタンプIDが指定されていません。');
+    return;
+  }
+
+  const today = getToday();
+  const stampHistoryKey = `stampHistory_${stampId}`;
+  const lastStampDate = localStorage.getItem(stampHistoryKey);
+
+  if (lastStampDate === today) {
+    alert('本日はすでにこのスタンプを押しています。');
+    return;
+  }
+
+  // 押印履歴を今日の日付で更新
+  localStorage.setItem(stampHistoryKey, today);
+
   let count = parseInt(localStorage.getItem('stampCount') || '0', 10);
   count += 1;
   localStorage.setItem('stampCount', count.toString());
@@ -80,7 +97,13 @@ function updateUI() {
   const count = localStorage.getItem('stampCount') || '0';
   document.getElementById('stampCountDisplay').textContent = `スタンプ数: ${count}`;
 
+  // UUID表示
+  const userId = localStorage.getItem('userId') || '';
+  document.getElementById('userIdDisplay').textContent = `ユーザーID: ${userId}`;
 
+  // クーポン画像表示エリアをクリア
+  const couponImageContainer = document.getElementById('couponImageContainer');
+  couponImageContainer.innerHTML = '';
 
   // クーポン一覧表示
   const coupons = JSON.parse(localStorage.getItem('coupons') || '[]');
